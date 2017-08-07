@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="loginController" class="com.ezpay.web.controller.LoginController">
+		<property name="userDAO" ref="userDAO" />
+		<property name="successView" value="login_success" />
+		<property name="formView" value="login" />
+	</bean>
+
+	<bean id="registerController" class="com.ezpay.web.controller.RegisterController">
+		<property name="validator" ref="registerValidator" />
+		<property name="userDAO" ref="userDAO" />
+		<property name="successView" value="register_success" />
+		<property name="formView" value="register" />
+	</bean>
+
+	<bean id="registerValidator" class="com.ezpay.web.controller.validate.RegisterValidator" />
+
+	<bean id="paraMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="displayUrl" />
+	</bean>
+
+	<bean id="memberController" class="com.ezpay.web.controller.MemberController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+		<property name="userDAO" ref="userDAO" />
+		<property name="bookmarkDAO" ref="bookmarkDAO" />
+		<property name="memberPage" value="member" />
+		<property name="addBmPage" value="addbm" />
+		<property name="passwdPage" value="change_passwd" />
+		<property name="redirectPage" value="/SpringWeb/login.do" />
+	</bean>
+
+	<bean id="forgotController" class="com.ezpay.web.controller.ForgotController">
+		<property name="userDAO" ref="userDAO" />
+		<property name="simpleMail" ref="simpleMail" />
+		<property name="loginPage" value="login" />
+		<property name="forgotPage" value="forgot" />
+	</bean>
+
+	<bean id="simpleMail" class="com.ezpay.web.util.mail.SimpleMail">
+		<property name="smtpHost" value="mail1.ezpay.com.tw" />
+		<property name="from" value="service@neweb.com.tw" />
+	</bean>
+
+</beans>

@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="someData" class="com.ezpay.web.util.schedule.jobdata.JobData" />
+
+	<bean id="jobDetailBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.ezpay.web.util.schedule.job.DemoJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="jobData" value-ref="someData" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="demoMethodJob" class="com.ezpay.web.util.schedule.job.DemoMethodJob">
+		<property name="jobData" ref="someData" />
+	</bean>
+
+	<bean id="methodJobDetailBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="demoMethodJob" />
+		<property name="targetMethod" value="execute" />
+	</bean>
+
+	<bean id="simpleTriggerBean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="jobDetailBean" />
+		<property name="repeatInterval" value="5000" />
+		<property name="startDelay" value="1000" />
+	</bean>
+	
+	<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="methodJobDetailBean" />
+		<property name="cronExpression" value="0-59 * * * * ?" />
+	</bean>
+
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTriggerBean" />
+				<ref bean="cronTriggerBean" />
+			</list>
+		</property>
+	</bean>
+
+</beans>
