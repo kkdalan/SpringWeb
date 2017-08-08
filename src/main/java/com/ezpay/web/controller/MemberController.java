@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.ezpay.web.dao.IBookmarkDAO;
-import com.ezpay.web.dao.IUserDAO;
+import com.ezpay.web.dao.intf.IBookmarkDAO;
+import com.ezpay.web.dao.intf.IUserDAO;
 import com.ezpay.web.dto.User;
 
 public class MemberController extends MultiActionController {
@@ -84,7 +84,7 @@ public class MemberController extends MultiActionController {
           req.getSession().invalidate();
           return new ModelAndView(new RedirectView(getRedirectPage()));
      }
-
+     
      public IUserDAO getUserDAO() {
           return userDAO;
      }

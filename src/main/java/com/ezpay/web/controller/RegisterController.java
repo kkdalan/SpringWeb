@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import com.ezpay.web.controller.form.RegisterForm;
-import com.ezpay.web.dao.IUserDAO;
+import com.ezpay.web.dao.intf.IUserDAO;
 import com.ezpay.web.dto.User;
 
 public class RegisterController extends SimpleFormController {

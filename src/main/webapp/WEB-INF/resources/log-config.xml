@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="logBeforeAdvice" class="com.ezpay.web.aop.log.LogBeforeAdvice" />
+	<bean id="logAfterAdvice" class="com.ezpay.web.aop.log.LogAfterAdvice" />
+	<bean id="logInterceptor" class="com.ezpay.web.aop.log.LogInterceptor" />
+	
+	<bean id="autoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+          <property name="beanNames">
+               <list>
+                    <value>*DAO</value>
+               </list>
+          </property>
+          <property name="interceptorNames">
+               <list>
+                    <value>logInterceptor</value>
+               </list>
+          </property>
+     </bean>
+
+</beans>

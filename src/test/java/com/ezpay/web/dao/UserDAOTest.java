@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.ezpay.web.dao.intf.IUserDAO;
 import com.ezpay.web.dto.User;
 
 import junit.framework.TestCase;

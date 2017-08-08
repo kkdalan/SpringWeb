@@ -29,8 +29,7 @@ a {
 </style>
 </head>
 <body>
-	<img src='/images/spring.jpg' alt='Spring 線上書籤  Logo' border='0'
-		align='left' valign='botton' />
+	<img src='/resources/images/spring.jpg' alt='Spring 線上書籤  Logo' border='0' align='left'  />
 	<h1>&nbsp;Spring 線上書籤</h1>
 	<hr style="width: 100%; height: 2px;">
 	<hr style="width: 100%; height: 2px;">
@@ -73,6 +72,7 @@ a {
 			</tr>
 		</table>
 	</form>
+	<a href='/SpringWeb/files_show.do'>檔案管理介面</a>
 </body>
 </html>
 

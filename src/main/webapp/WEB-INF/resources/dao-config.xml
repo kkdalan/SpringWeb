@@ -22,20 +22,12 @@
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
 		destroy-method="destroy">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mappingDirectoryLocations">
-			<list>
-				<value>classpath:/com/ezpay/web/dto/orm</value>
-			</list>
-		</property>
-		<!-- 
 		<property name="mappingResources">
 			<list>
 				<value>com/ezpay/web/dto/orm/User.hbm.xml</value>
 				<value>com/ezpay/web/dto/orm/Bookmark.hbm.xml</value>
-				<value>com/ezpay/web/dto/orm/Files.hbm.xml</value>
 			</list>
 		</property>
-		 -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
@@ -63,7 +55,7 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="allDAOPointcut" />
 	</aop:config>
 
-
+	
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -75,9 +67,4 @@
 	<bean id="bookmarkDAO" class="com.ezpay.web.dao.BookmarkDAO">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-
-	<bean id="filesDAO" class="com.ezpay.web.dao.FilesDAO">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-
 </beans>

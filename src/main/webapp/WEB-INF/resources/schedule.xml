@@ -28,13 +28,13 @@
 
 	<bean id="simpleTriggerBean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="jobDetailBean" />
-		<property name="repeatInterval" value="10000" />
+		<property name="repeatInterval" value="5000" />
 		<property name="startDelay" value="1000" />
 	</bean>
 	
 	<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="methodJobDetailBean" />
-		<property name="cronExpression" value="0 * * * * ?" />
+		<property name="cronExpression" value="0-59 * * * * ?" />
 	</bean>
 
 	<bean id="schedulerFactoryBean"

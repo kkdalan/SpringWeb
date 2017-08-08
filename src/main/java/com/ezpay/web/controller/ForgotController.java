@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
-import com.ezpay.web.dao.IUserDAO;
+import com.ezpay.web.dao.intf.IUserDAO;
 import com.ezpay.web.dto.User;
 import com.ezpay.web.util.mail.SimpleMail;
 

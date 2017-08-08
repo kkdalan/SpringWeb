@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import com.ezpay.web.dao.intf.IUserDAO;
 import com.ezpay.web.dto.User;
 
 public class UserDAO implements IUserDAO {

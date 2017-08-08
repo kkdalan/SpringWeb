@@ -1,4 +1,4 @@
-package com.ezpay.web.dao;
+package com.ezpay.web.dao.intf;
 
 import java.util.List;
 

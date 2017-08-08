@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import com.ezpay.web.dao.intf.IBookmarkDAO;
 import com.ezpay.web.dto.Bookmark;
 import com.ezpay.web.dto.User;
 

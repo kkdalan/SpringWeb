@@ -28,14 +28,15 @@ a {
 </style>
 </head>
 <body>
-	<img src='images/spring.jpg' alt='Spring 線上書籤  Logo' border='0' align='left' valign='botton' />
+	<img src='/resources/images/spring.jpg' alt='Spring 線上書籤  Logo' border='0' align='left'  />
 	<h1>&nbsp;Spring 線上書籤</h1>
 	<hr style="width: 100%; height: 2px;">
 	<hr style="width: 100%; height: 2px;">
-	登入成功，前往會員網頁!
-	<br>
-	<a href='member.do'>會員網頁</a>
-	<br>
+	<form name="uploadForm" enctype="multipart/form-data" action="/SpringWeb/upload.do" method="POST">
+		檔案名稱：<input name="name" type="text" /><br>
+		選擇檔案：<input name="contents" type="file" /><br>
+		<input type="submit" value="上傳" />
+	</form>
 </body>
 </html>
 

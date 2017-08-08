@@ -41,46 +41,10 @@
 		<property name="loginPage" value="login" />
 		<property name="forgotPage" value="forgot" />
 	</bean>
-	
-	<bean id="fileController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
-		<property name="viewName" value="files_manager" />
-		<!-- 
-		<property name="viewName" value="upload" />
-		 -->
-	</bean>
-	
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1000000" />
-	</bean>
-	
-	<bean id="uploadController" class="com.ezpay.web.controller.UploadController">
-		<property name="path" value="D:\\Projects\SpringWeb\upload" />
-		<property name="formView" value="form" />
-		<property name="successView" value="upload_success" />
-	</bean>
 
 	<bean id="simpleMail" class="com.ezpay.web.util.mail.SimpleMail">
 		<property name="smtpHost" value="mail1.ezpay.com.tw" />
 		<property name="from" value="service@neweb.com.tw" />
 	</bean>
-	
-	
-    <bean id="filesController" class="com.ezpay.web.controller.FilesController">
-        <property name="filesDAO" ref="filesDAO"/>
-        <property name="methodNameResolver">
-            <bean class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
-                <property name="mappings">
-                    <props>
-                        <prop key="/files_upload.do">upload</prop>
-                        <prop key="/files_download.do">download</prop>
-                        <prop key="/files_delete.do">delete</prop>
-                        <prop key="/files_show.do">show</prop>
-                    </props>
-                </property>
-            </bean>
-        </property>
-    </bean>
-    
 
 </beans>
