@@ -3,7 +3,6 @@ package com.ezpay.web.aop.log;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 public class LogInterceptor implements MethodInterceptor {
 

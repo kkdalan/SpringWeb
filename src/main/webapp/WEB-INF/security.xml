@@ -1,0 +1,46 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	       http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+
+	<!-- The setting indicates that all URLs within our application to be secured, 
+	     requiring the role ROLE_USER to access them. -->
+	<!--
+	Notes:
+		1.The <http> element is the parent for all web-related namespace functionality. 
+		2.The <intercept-url> element defines a pattern which is matched against the URLs 
+		  of incoming requests using an ant path style syntax.
+		3.The access attribute defines the access requirements for requests matching the given pattern. 
+		  With the default configuration, this is typically a comma-separated list of roles.
+    -->
+
+	<http auto-config='true'>
+	    <intercept-url pattern='/**' access='ROLE_USER' />
+		
+		<!-- (optional) input-box login
+		<http-basic />
+		-->
+	</http>
+
+	<!-- The configuration above defines two users, their passwords and their 
+		roles within the application (which will be used for access control) -->
+    <!-- 
+    Notes: 
+    	1.Using the <authentication-provider> element means that the user information 
+    	  will be used by the authentication manager to process authentication requests.
+	    2.
+	-->
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="ezpay" password="ezpay" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="vip" password="vip" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>

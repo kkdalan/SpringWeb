@@ -1,6 +1,5 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -14,10 +13,12 @@
 	<import resource="dao-config.xml" />
 	<import resource="log-config.xml" />
 	<import resource="schedule.xml" />
+	<import resource="security.xml" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -32,20 +33,17 @@
 				<prop key="/forgot.do">forgotController</prop>
 				<prop key="/file.do">fileController</prop>
 				<prop key="/upload.do">uploadController</prop>
-				
+
 				<prop key="/files_show.do">filesController</prop>
 				<prop key="/files_upload.do">filesController</prop>
-                <prop key="/files_download.do">filesController</prop>
-                <prop key="/files_delete.do">filesController</prop>
+				<prop key="/files_download.do">filesController</prop>
+				<prop key="/files_delete.do">filesController</prop>
 			</props>
 		</property>
 	</bean>
 
-	<!-- 
-	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
-	-->
-	
-	<!-- 
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	-->
+	<!-- <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" 
+		/> -->
+
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
 </beans>
