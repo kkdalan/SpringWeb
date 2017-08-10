@@ -65,10 +65,15 @@ create table security.dbo.group_members (
 --      insert data
 --==========================
 --user authentication
+--insert into security.dbo.users(username,password,enabled) values ('Tom','$2a$10$MNnG1qOZTDUGEBAnzWicyejfnTyNk3tN4BXGJxE/1jBXRNdRpqEd.', 1);
+--insert into security.dbo.users(username,password,enabled) values ('John','$2a$10$FJnAguAa3JZT501LeTazwut2qrQhgIMEgsUzrKJmyDvsyl6HetMOe', 1);
+--insert into security.dbo.users(username,password,enabled) values ('Susan','$2a$10$YCTmCx1UKVmq4u.JWgrEuuieVyWNEyzHE5dRZyVvBCgeAuBR2yJh6', 1);
+--insert into security.dbo.users(username,password,enabled) values ('Alan','$2a$10$1Kf4fl4qlMdVI6A0voBQ9eX.pd9y2M7ULdN1YNGZjijWwWtbH0v2q', 1); 
 insert into security.dbo.users(username,password,enabled) values ('Tom','Tom', 1);
 insert into security.dbo.users(username,password,enabled) values ('John','John', 1);
 insert into security.dbo.users(username,password,enabled) values ('Susan','Susan', 1);
 insert into security.dbo.users(username,password,enabled) values ('Alan','Alan', 1); 
+
 
 insert into security.dbo.authorities (username, authority) values ('Tom', 'ROLE_USER');
 insert into security.dbo.authorities (username, authority) values ('John', 'ROLE_USER');

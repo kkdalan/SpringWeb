@@ -22,18 +22,20 @@
 	<http auto-config='true'>
 	    <intercept-url pattern='/**' access='ROLE_ADMIN, ROLE_SUPERVISOR' requires-channel="any"/>
 		
-		<session-management>
+		<session-management invalid-session-url="/invalidSession.htm" >
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
+			
 		</session-management>
+		
 	</http>
 
 
 	<!-- The configuration above defines two users, their passwords and their 
-		roles within the application (which will be used for access control) -->
-    <!-- 
-    Notes: 3 types to perform authentication 
-    	Using the <authentication-provider> element means that the user information 
-    	will be used by the authentication manager to process authentication requests.
+		 roles within the application (which will be used for access control) -->
+		 
+    <!-- Notes: 3 types to perform authentication 
+    	        Using the <authentication-provider> element means that the user information 
+    	        will be used by the authentication manager to process authentication requests.
 	    
 	    1.In-Memory Authentication
 	      ex:<user-service> 
@@ -48,6 +50,7 @@
 	      But the user, authorities tables schema should follow the JdbcDaoImpl query string.
 	      Ref: https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#appendix-schema
 	-->
+
 	<authentication-manager>
 		<authentication-provider ref="daoAuthenticationProvider" />
 	</authentication-manager>
@@ -55,6 +58,14 @@
 	<beans:bean id="daoAuthenticationProvider"
 		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="userDetailsService" />
+		<!-- 
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+		 -->
+	</beans:bean>
+	
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="11" />
 	</beans:bean>
 
 	<beans:bean id="userDetailsService"
