@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=Big5"
 	pageEncoding="Big5"%>
-<%@ taglib prefix="ezpay" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
