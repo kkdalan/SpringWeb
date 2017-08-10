@@ -16,39 +16,61 @@
 		  of incoming requests using an ant path style syntax.
 		3.The access attribute defines the access requirements for requests matching the given pattern. 
 		  With the default configuration, this is typically a comma-separated list of roles.
+    	4.Using <http-basic /> within <http>'s tags shows the msgbox to input username/password.  
     -->
 
 	<http auto-config='true'>
-	    <intercept-url pattern='/**' access='ROLE_USER' requires-channel="any"/>
+	    <intercept-url pattern='/**' access='ROLE_ADMIN, ROLE_SUPERVISOR' requires-channel="any"/>
 		
 		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
 		</session-management>
- 		
-		<!-- <http-basic /> -->
 	</http>
 
 
 	<!-- The configuration above defines two users, their passwords and their 
 		roles within the application (which will be used for access control) -->
     <!-- 
-    Notes: 
-    	1.Using the <authentication-provider> element means that the user information 
-    	  will be used by the authentication manager to process authentication requests.
-	    2.
+    Notes: 3 types to perform authentication 
+    	Using the <authentication-provider> element means that the user information 
+    	will be used by the authentication manager to process authentication requests.
+	    
+	    1.In-Memory Authentication
+	      ex:<user-service> 
+			     <user name="ezpay" password="ezpay" authorities="ROLE_USER, ROLE_ADMIN" />
+				 <user name="vip" password="vip" authorities="ROLE_USER" /> 
+			 </user-service> 
+	    
+	    2.In-Memory Authentication with external properties file
+	      ex:<user-service id="userDetailsService" properties="users.properties" />
+	    
+	    3.Using DaoAuthenticationProvider injectd by Jdbc datasource to authenticate.
+	      But the user, authorities tables schema should follow the JdbcDaoImpl query string.
+	      Ref: https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#appendix-schema
 	-->
 	<authentication-manager>
-		<authentication-provider>
-			
-			<!-- In-Memory Authentication with external properties file -->
-			<user-service id="userDetailsService" properties="users.properties" />
-			<!-- 
-			<user-service> 
-				<user name="ezpay" password="ezpay" authorities="ROLE_USER, ROLE_ADMIN" />
-				<user name="vip" password="vip" authorities="ROLE_USER" /> 
-			</user-service> 
-			-->
-		</authentication-provider>
+		<authentication-provider ref="daoAuthenticationProvider" />
 	</authentication-manager>
+	
+	<beans:bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+	</beans:bean>
+
+	<beans:bean id="userDetailsService"
+		class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="enableGroups" value="true" />
+	    <beans:property name="enableAuthorities" value="true" />
+	</beans:bean>
+	
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<beans:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<beans:property name="url"
+			value="jdbc:sqlserver://127.0.0.1:1433;databaseName=security" />
+		<beans:property name="username" value="sa" />
+		<beans:property name="password" value="0000" />
+	</beans:bean>
 	
 </beans:beans>
