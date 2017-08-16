@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping 
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.ezpay.web.dto.test.User" table="tb_user" >
+		<id name="id" column="id">
+			<generator class="native" />
+		</id>
+		<property name="username" column="username" />
+		<property name="passwd" column="passwd" />
+		<property name="email" column="email" />
+		
+		<set name="bookmarks" table="tb_user_bookmarks" inverse="true">
+			<key column="user_id"/>
+			<many-to-many class="com.ezpay.web.dto.test.Bookmark" column="bm_id"/>
+		</set>
+		
+		<list name="favorites" table="tb_user_favorites" >
+			<key column="user_id"/>
+			<index column="position"/>
+			<many-to-many class="com.ezpay.web.dto.test.Bookmark" column="bm_id"/>
+		</list>
+		
+		<list name="favoriteBookmarks" table="tb_user_favorite_bookmarks" cascade="all" >
+			<key column="user_id"/>
+			<index column="position"/>
+			<composite-element class="com.ezpay.web.dto.test.FavoriteBookmark" >
+				<many-to-one name="bookmark" class="com.ezpay.web.dto.test.Bookmark" cascade="all">
+					<column name="bm_id"/>
+				</many-to-one>
+				<property name="desc" column="description" />
+			</composite-element>
+		</list>
+		
+		<many-to-one name="actualUser" class="com.ezpay.web.dto.test.User">
+			<column name="actual_id"/>
+		</many-to-one>
+		
+		<many-to-one name="lastUser" class="com.ezpay.web.dto.test.User">
+			<column name="last_id"/>
+		</many-to-one>
+		
+	</class>
+	
+	<query name="com.ezpay.web.userByName">
+			<![CDATA[
+				from com.ezpay.web.dto.test.User as user
+				where upper(user.username) = upper(:username)
+			]]>
+	</query>
+	<query name="com.ezpay.web.usersByUsername">
+			<![CDATA[
+				from com.ezpay.web.dto.test.User as user
+				where user.username = :username
+			]]>
+	</query>
+</hibernate-mapping>

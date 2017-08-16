@@ -25,7 +25,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingDirectoryLocations">
 			<list>
-				<value>classpath:/com/ezpay/web/dto/orm</value>
+				<value>classpath:/com/ezpay/web/dto/orm/</value>
 			</list>
 		</property>
 		<!-- 

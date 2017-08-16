@@ -64,6 +64,8 @@
 	<!-- Note that you should not use this bean name yourself. 
 	Once you've added this to your web.xml, you're ready to start editing your application context file. 
 	Web security services are configured using the <http> element. -->
+	<!-- 
+	
 	
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -80,5 +82,5 @@
 			org.springframework.security.web.session.HttpSessionEventPublisher
 		</listener-class>
 	</listener>
-	
+	 -->
 </web-app>
