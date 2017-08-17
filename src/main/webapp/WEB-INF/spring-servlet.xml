@@ -13,11 +13,8 @@
 	<import resource="dao-config.xml" />
 	<import resource="log-config.xml" />
 	<import resource="schedule.xml" />
-	<!-- 
 	<import resource="security.xml" />
-	 -->
 	
-
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"

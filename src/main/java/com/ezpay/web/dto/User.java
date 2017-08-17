@@ -7,14 +7,6 @@ public class User {
 	private String passwd = null;
 	private String email = null;
 
-	public User() {
-
-	}
-
-	public User(String username) {
-		this.username = username;
-	}
-
 	public Integer getId() {
 		return id;
 	}

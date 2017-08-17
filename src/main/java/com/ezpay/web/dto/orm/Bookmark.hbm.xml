@@ -9,5 +9,5 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		</id>
 		<property name="username" column="username" />
 		<property name="url" column="bm_url" />
-	</class>
+	</class>	
 </hibernate-mapping>

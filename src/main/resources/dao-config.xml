@@ -10,14 +10,7 @@
           http://www.springframework.org/schema/aop
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-		<property name="url"
-			value="jdbc:sqlserver://127.0.0.1:1433;databaseName=test" />
-		<property name="username" value="sa" />
-		<property name="password" value="0000" />
-	</bean>
+	<import resource="dbcp.xml" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
@@ -25,7 +18,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingDirectoryLocations">
 			<list>
-				<value>classpath:/com/ezpay/web/dto/orm/</value>
+				<value>classpath:/com/ezpay/web/dto/orm</value>
 			</list>
 		</property>
 		<!-- 
@@ -40,6 +33,8 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
 			</props>
 		</property>
 	</bean>

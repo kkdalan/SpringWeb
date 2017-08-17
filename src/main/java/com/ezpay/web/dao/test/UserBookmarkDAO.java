@@ -1,11 +1,9 @@
 package com.ezpay.web.dao.test;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -27,30 +25,68 @@ import com.ezpay.web.dto.test.User;
 public class UserBookmarkDAO {
 
 	public static void main(String args[]) throws Exception {
-		
-//		testCreateBookmarksWithUsers();
-//		testCreateBookmarkWithComments();
-//		testQueryBookmarksWithUsersAndComments();
-//		testQueryUsersWithBookmarks();
-//		testCreateUserFavorites();
-//		testCreateUserFavoriteBookmarks();
-//		testDeleteUserFavoriteBookmarks();
-//		testCreateUserByRelexiveLink();
-//		testQueryUsersWithActualUser();
-//		testCreateUserEditingHistoryAndShowing();
-//		
-//		testQueryUsersByCriteria();
-//		testQueryUsersByCriteriaWithAssociation();
-//		testQueryUsersByExample();
-//		
-//		testQueryObjectsByHQL();
-//		testQueryUsersByHQL();
-		testAggragationFunctionByHQL();
+
+		 testDeleteUsersByHQL();
+		 testCreateBookmarksWithUsers();
+		 testCreateBookmarkWithComments();
+		 testQueryBookmarksWithUsersAndComments();//To fix
+		 testCreateUserFavorites();
+		 testCreateUserFavoriteBookmarks();
+		 testQueryUsersWithBookmarks();
+		 testDeleteUserFavoriteBookmarks();
+		 testCreateUserByRelexiveLink();
+		 testQueryUsersWithActualUser();
+		 testCreateUserEditingHistoryAndShowing();
+		 testQueryUsersByCriteria();
+		 testQueryUsersByCriteriaWithAssociation();
+		 testQueryUsersByExample();
+		 testQueryObjectsByHQL();
+		 testQueryUsersByHQL();
+		 testAggragationFunctionByHQL();
+		 
+	}
+
+	private static void testDeleteUsersByHQL() throws Exception {
+
+		Configuration config = new Configuration();
+		config.addClass(User.class).addClass(Bookmark.class);
+
+		SessionFactory sessionFactory = config.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			System.out.println("-----------------------------------------");
+			System.out.println("Test delete users by HQL");
+			System.out.println("-----------------------------------------");
+
+			String hql = "from User user where user.username <> ? ";
+			Query query = session.createQuery(hql);
+			int j = 0;
+			query.setString(j++, "test");
+			List items = query.list();
+			for(Object item: items){
+				User user = (User) item;
+				session.delete(item);
+			}
+			tx.commit();
+			System.out.println("[ok] Successfully delete users (except \'test\')");
+			
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		} finally {
+			session.close();
+		}
+		sessionFactory.close();
 	}
 	
 	private static void testAggragationFunctionByHQL() throws Exception {
-		
-        Configuration config = new Configuration();
+
+		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
 
 		SessionFactory sessionFactory = config.buildSessionFactory();
@@ -71,7 +107,7 @@ public class UserBookmarkDAO {
 			System.out.println("         Total users = " + results[0]);
 			System.out.println("            Max user = " + results[1]);
 			System.out.println("            Min user = " + results[2]);
-			
+
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -79,7 +115,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryUsersByHQL() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -92,14 +128,16 @@ public class UserBookmarkDAO {
 			System.out.println("Query users by HQL");
 			System.out.println("-----------------------------------------");
 
-			String hql = "from User user "
-					+ " where user.username like ? "
-					+ " order by user.username desc ";
+			String hql = "from User user " 
+						+ " where user.username like ? " 
+						+ " order by user.username desc ";
 			Query query = session.createQuery(hql);
 			int j = 0;
 			query.setString(j++, "Kim Sori.__");
 			List list = query.list();
-			list.forEach(item -> System.out.println("User: " + ((User) item).getUsername()));
+			for(Object item : list){
+				System.out.println("User: " + ((User) item).getUsername());
+			}
 
 		} catch (Exception e) {
 			throw e;
@@ -108,7 +146,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryObjectsByHQL() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -125,7 +163,7 @@ public class UserBookmarkDAO {
 			for (int i = 0; i < list.size(); i++) {
 				System.out.println("Object: " + list.get(i));
 			}
-			
+
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -133,7 +171,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryUsersByExample() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -159,7 +197,7 @@ public class UserBookmarkDAO {
 				User user = (User) list.get(i);
 				System.out.println("User: \"" + user.getUsername());
 			}
-			
+
 		} catch (Exception e) {
 			if (tx != null) {
 				tx.rollback();
@@ -170,7 +208,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryUsersByCriteriaWithAssociation() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -188,7 +226,7 @@ public class UserBookmarkDAO {
 			Criteria criteria = session.createCriteria(User.class);
 			Criteria bookmarkCcriteria = criteria.createCriteria("bookmarks");
 			bookmarkCcriteria.add(Expression.like("url", "%google%"));
-			
+
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.addOrder(Order.desc("username"));
 
@@ -196,9 +234,10 @@ public class UserBookmarkDAO {
 			for (int i = 0; i < list.size(); i++) {
 				User user = (User) list.get(i);
 				System.out.println("User: \"" + user.getUsername());
-//				System.out.println("User: \"" + user.getUsername() + "\"" + listUserBookmarks(user.getBookmarks()));
+				// System.out.println("User: \"" + user.getUsername() + "\"" +
+				// listUserBookmarks(user.getBookmarks()));
 			}
-			
+
 		} catch (Exception e) {
 			if (tx != null) {
 				tx.rollback();
@@ -209,7 +248,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryUsersByCriteria() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -226,18 +265,18 @@ public class UserBookmarkDAO {
 
 			Criteria criteria = session.createCriteria(User.class);
 			criteria.add(Expression.like("username", "%Sori%"));
-			
+
 			Disjunction any = Expression.disjunction();
 			any.add(Expression.isNotNull("lastUser"));
-			any.add(Expression.in("username", new Object[]{"Kim Sori.3","Kim Sori.1"}));
+			any.add(Expression.in("username", new Object[] { "Kim Sori.3", "Kim Sori.1" }));
 			criteria.add(any);
-			
+
 			Conjunction all = Expression.conjunction();
 			all.add(Expression.like("username", "%Sori.%"));
-			all.add(Expression.in("username", new Object[]{"Kim Sori.4","Kim Sori.2","Kim Sori.1"}));
+			all.add(Expression.in("username", new Object[] { "Kim Sori.4", "Kim Sori.2", "Kim Sori.1" }));
 			all.add(any);
 			criteria.add(all);
-			
+
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.addOrder(Order.desc("username"));
 
@@ -257,7 +296,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testCreateUserEditingHistoryAndShowing() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -274,7 +313,7 @@ public class UserBookmarkDAO {
 
 			User oldUser;
 			oldUser = getUser("Kim Sori", true, session);
-			
+
 			System.out.println("## Editing user: " + oldUser.getUsername());
 			int c = 15;
 			for (int i = 0; i < c; i++) {
@@ -285,7 +324,7 @@ public class UserBookmarkDAO {
 				oldUser = newUser;
 			}
 			tx.commit();
-			
+
 			System.out.println("## Show user history, username = " + oldUser.getUsername());
 			List<String> records = new ArrayList<String>();
 			String username = "Kim Sori.14";
@@ -293,18 +332,18 @@ public class UserBookmarkDAO {
 			User lastUser;
 			for (; aUser != null;) {
 				lastUser = aUser.getLastUser();
-				if(lastUser!=null){
-					records.add("User: " + aUser.getUsername() + " ( last = " + lastUser.getUsername() +" )");
+				if (lastUser != null) {
+					records.add("User: " + aUser.getUsername() + " ( last = " + lastUser.getUsername() + " )");
 					username = lastUser.getUsername();
-				}else{
-					records.add("User: " + aUser.getUsername() + " ( last = " + lastUser +" )");
+				} else {
+					records.add("User: " + aUser.getUsername() + " ( last = " + lastUser + " )");
 					username = null;
 				}
 				aUser = getUser(username, false, session);
 			}
-			
+
 			System.out.println("## SHOW HISTORY ##");
-			for(String record : records){
+			for (String record : records) {
 				System.out.println(record);
 			}
 
@@ -318,7 +357,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testQueryUsersWithActualUser() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -335,7 +374,8 @@ public class UserBookmarkDAO {
 			List users = findUsersByUsername("Jerry.3", session);
 			for (Iterator iter = users.iterator(); iter.hasNext();) {
 				User aUser = (User) iter.next();
-				System.out.println("User: " + aUser.getUsername() + ", actual user = " + aUser.getActualUser().getUsername());
+				System.out.println(
+						"User: " + aUser.getUsername() + ", actual user = " + aUser.getActualUser().getUsername());
 			}
 
 		} catch (Exception e) {
@@ -348,7 +388,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testCreateUserByRelexiveLink() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -365,22 +405,20 @@ public class UserBookmarkDAO {
 
 			User user, aliasUser;
 			user = getUser("Jerry", true, session);
-			
+
 			aliasUser = getUser("Jerry.1", true, session);
 			aliasUser.setActualUser(user);
 			session.update(aliasUser);
-			
+
 			aliasUser = getUser("Jerry.2", true, session);
 			aliasUser.setActualUser(user);
 			session.update(aliasUser);
-			
+
 			aliasUser = getUser("Jerry.3", true, session);
 			aliasUser.setActualUser(user);
 			session.update(aliasUser);
-			
+
 			tx.commit();
-			
-			
 
 		} catch (Exception e) {
 			if (tx != null) {
@@ -411,7 +449,7 @@ public class UserBookmarkDAO {
 			user = getUser("Jerry", true, session);
 			user.getFavoriteBookmarks().remove(0);
 			session.update(user);
-//			session.delete(user);
+			// session.delete(user);
 			tx.commit();
 
 		} catch (Exception e) {
@@ -424,7 +462,7 @@ public class UserBookmarkDAO {
 		}
 		sessionFactory.close();
 	}
-	
+
 	private static void testCreateUserFavoriteBookmarks() throws Exception {
 		Configuration config = new Configuration();
 		config.addClass(User.class).addClass(Bookmark.class);
@@ -558,8 +596,8 @@ public class UserBookmarkDAO {
 			List bookmarks = findBookmarksByUrl("http://www.google.com.tw", session);
 			for (Iterator iter = bookmarks.iterator(); iter.hasNext();) {
 				Bookmark aBookmark = (Bookmark) iter.next();
-				System.out.println(
-						"Bookmark: \"" + aBookmark.getUrl() + "\"" + listBookmarkUsernames(aBookmark.getUsers()));
+//				System.out.println("Bookmark: \"" + aBookmark.getUrl() + "\"" + listBookmarkUsernames(aBookmark.getUsers()));
+				System.out.println("Bookmark: " + aBookmark.getUrl());
 				for (Iterator comIter = aBookmark.getComments().iterator(); comIter.hasNext();) {
 					System.out.println("Bookmark: " + aBookmark.getUrl() + " -> comments: " + comIter.next());
 				}
@@ -685,11 +723,11 @@ public class UserBookmarkDAO {
 			found = new User(username);
 			session.save(found);
 		}
-		
-		if(found != null && found.getActualUser() !=null){
+
+		if (found != null && found.getActualUser() != null) {
 			return found.getActualUser();
 		}
-		
+
 		return found;
 	}
 
@@ -731,4 +769,6 @@ public class UserBookmarkDAO {
 	private static void addUserFavoriteBookmarks(User user, FavoriteBookmark favoriteBookmark) {
 		user.getFavoriteBookmarks().add(favoriteBookmark);
 	}
+
+	
 }

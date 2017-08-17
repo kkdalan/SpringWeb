@@ -9,14 +9,17 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		</id>
 		<property name="username" column="username" />
 		<property name="url" column="bm_url" />
-		<set name="users" table="tb_user_bookmarks" >
+		
+		<set name="users" table="tb_user_bookmarks" cascade="all">
 			<key column="bm_id"/>
-			<many-to-many class="com.ezpay.web.dto.test.User" column="user_id"/>
+			<many-to-many class="com.ezpay.web.dto.test.User" column="user_id" />
 		</set>
+		
 		<set name="comments" table="tb_bookmark_comments" >
 			<key column="bm_id"/>
 			<element column="comment" type="string"/>
 		</set>
+		
 	</class>
 	<query name="com.ezpay.web.bookarksByUrl">
 			<![CDATA[

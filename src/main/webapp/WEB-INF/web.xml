@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee" 
-	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
 	<display-name>Spring MVC Web Application</display-name>
-	<!-- http://localhost:8080/SpringMVC/ -->
+	<!-- http://localhost:8080/SpringWeb/ -->
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -64,8 +64,6 @@
 	<!-- Note that you should not use this bean name yourself. 
 	Once you've added this to your web.xml, you're ready to start editing your application context file. 
 	Web security services are configured using the <http> element. -->
-	<!-- 
-	
 	
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -82,5 +80,5 @@
 			org.springframework.security.web.session.HttpSessionEventPublisher
 		</listener-class>
 	</listener>
-	 -->
+	
 </web-app>

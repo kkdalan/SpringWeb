@@ -5,14 +5,6 @@ public class Bookmark {
 	private String username = null;
 	private String url = null;
 
-	public Bookmark() {
-
-	}
-
-	public Bookmark(String url) {
-		this.url = url;
-	}
-
 	public Integer getId() {
 		return id;
 	}

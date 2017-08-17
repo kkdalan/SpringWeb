@@ -7,6 +7,8 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
+	<beans:import resource="dbcp.xml" />
+	
 	<!-- The setting indicates that all URLs within our application to be secured, 
 	     requiring the role ROLE_USER to access them. -->
 	<!--
@@ -22,9 +24,8 @@
 	<http auto-config='true'>
 	    <intercept-url pattern='/**' access='ROLE_ADMIN, ROLE_SUPERVISOR' requires-channel="any"/>
 		
-		<session-management invalid-session-url="/invalidSession.htm" >
+		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
-			
 		</session-management>
 		
 	</http>
@@ -70,18 +71,9 @@
 
 	<beans:bean id="userDetailsService"
 		class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="dataSource" ref="dataSource2" />
 		<beans:property name="enableGroups" value="true" />
 	    <beans:property name="enableAuthorities" value="true" />
-	</beans:bean>
-	
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<beans:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-		<beans:property name="url"
-			value="jdbc:sqlserver://127.0.0.1:1433;databaseName=security" />
-		<beans:property name="username" value="sa" />
-		<beans:property name="password" value="0000" />
 	</beans:bean>
 	
 </beans:beans>
