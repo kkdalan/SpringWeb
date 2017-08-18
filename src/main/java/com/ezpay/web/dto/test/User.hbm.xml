@@ -3,12 +3,12 @@
 PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.ezpay.web.dto.test.User" table="tb_user" >
-		<id name="id" column="id">
+		<id name="id" column="id" type="integer">
 			<generator class="native" />
 		</id>
-		<property name="username" column="username" />
-		<property name="passwd" column="passwd" />
-		<property name="email" column="email" />
+		<property name="username" column="username" type="string"/>
+		<property name="passwd" column="passwd" type="string"/>
+		<property name="email" column="email" type="string"/>
 		
 		<set name="bookmarks" table="tb_user_bookmarks" inverse="true">
 			<key column="user_id"/>
@@ -28,7 +28,7 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforg
 				<many-to-one name="bookmark" class="com.ezpay.web.dto.test.Bookmark" cascade="all">
 					<column name="bm_id"/>
 				</many-to-one>
-				<property name="desc" column="description" />
+				<property name="desc" column="description" type="string"/>
 			</composite-element>
 		</list>
 		

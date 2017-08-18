@@ -4,11 +4,11 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.ezpay.web.dto.test.Bookmark" table="tb_bookmark">
-		<id name="id" column="id">
+		<id name="id" column="id" type="integer">
 			<generator class="native" />
 		</id>
-		<property name="username" column="username" />
-		<property name="url" column="bm_url" />
+		<property name="username" column="username" type="string"/>
+		<property name="url" column="bm_url" type="string"/>
 		
 		<set name="users" table="tb_user_bookmarks" cascade="all">
 			<key column="bm_id"/>

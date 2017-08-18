@@ -3,11 +3,11 @@
 PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.ezpay.web.dto.User" table="tb_user" >
-		<id name="id" column="id">
+		<id name="id" column="id" type="integer">
 			<generator class="native" />
 		</id>
-		<property name="username" column="username" length="16" not-null="true"/>
-		<property name="passwd" column="passwd" length="16"/>
-		<property name="email" column="email" length="100"/>
+		<property name="username" column="username" type="string" length="16" not-null="true"/>
+		<property name="passwd" column="passwd" type="string" length="16"/>
+		<property name="email" column="email" type="string" length="100"/>
 	</class>	
 </hibernate-mapping>

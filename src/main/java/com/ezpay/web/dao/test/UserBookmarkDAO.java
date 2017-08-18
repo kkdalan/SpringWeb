@@ -46,12 +46,21 @@ public class UserBookmarkDAO {
 		 
 	}
 
+	private static SessionFactory initializeSessionFactory() {
+		Configuration config = new Configuration().configure("hibernate.cfg.xml");
+		config.addClass(User.class).addClass(Bookmark.class);
+		SessionFactory sessionFactory = config.buildSessionFactory();
+		return sessionFactory;
+	}
+
+	private static void closeSessionFactory(SessionFactory sessionFactory, Session session) {
+		session.close();
+		sessionFactory.close();
+	}
+	
 	private static void testDeleteUsersByHQL() throws Exception {
 
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -79,17 +88,14 @@ public class UserBookmarkDAO {
 			}
 			throw e;
 		} finally {
-			session.close();
+			closeSessionFactory(sessionFactory, session);
 		}
-		sessionFactory.close();
+		
 	}
-	
+
 	private static void testAggragationFunctionByHQL() throws Exception {
 
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		try {
@@ -117,10 +123,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersByHQL() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		try {
@@ -148,10 +151,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryObjectsByHQL() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		try {
@@ -173,10 +173,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersByExample() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -210,10 +207,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersByCriteriaWithAssociation() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -250,10 +244,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersByCriteria() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -298,10 +289,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateUserEditingHistoryAndShowing() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -359,10 +347,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersWithActualUser() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -390,10 +375,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateUserByRelexiveLink() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -432,10 +414,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testDeleteUserFavoriteBookmarks() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -464,10 +443,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateUserFavoriteBookmarks() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -501,10 +477,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateUserFavorites() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -535,10 +508,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateBookmarksWithUsers() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -581,10 +551,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryBookmarksWithUsersAndComments() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -615,10 +582,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testQueryUsersWithBookmarks() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -645,10 +609,7 @@ public class UserBookmarkDAO {
 	}
 
 	private static void testCreateBookmarkWithComments() throws Exception {
-		Configuration config = new Configuration();
-		config.addClass(User.class).addClass(Bookmark.class);
-
-		SessionFactory sessionFactory = config.buildSessionFactory();
+		SessionFactory sessionFactory = initializeSessionFactory();
 		Session session = sessionFactory.openSession();
 
 		Transaction tx = null;
@@ -770,5 +731,4 @@ public class UserBookmarkDAO {
 		user.getFavoriteBookmarks().add(favoriteBookmark);
 	}
 
-	
 }

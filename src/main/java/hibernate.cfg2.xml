@@ -16,14 +16,16 @@
 		<!-- JDBC驅動程式 -->
 		<property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
 		<!-- JDBC URL -->
-		<property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;databaseName=test</property>
+		<property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;databaseName=hbm2ddl</property>
 		<!-- 資料庫使用者 -->
 		<property name="connection.username">sa</property>
 		<!-- 資料庫密碼 -->
 		<property name="connection.password">0000</property>
 		
 		<!-- 物件與資料庫表格映射文件 -->
-        
+        <mapping resource="com/ezpay/web/dto/orm/User.hbm.xml"/>
+        <mapping resource="com/ezpay/web/dto/orm/Bookmark.hbm.xml"/>
+        <mapping resource="com/ezpay/web/dto/orm/Files.hbm.xml"/>
         
 	</session-factory>
 

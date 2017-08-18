@@ -67,7 +67,7 @@ public class UserDAOTest extends TestCase {
 		try {
 			String username = "Tom";
 			User user = userDAO.findByName(username);
-			user.setUsername(username + "2");
+			user.setUsername(username);
 			user.setPasswd("ooooo");
 			user.setEmail("test@neweb.com.tw");
 			userDAO.update(user);

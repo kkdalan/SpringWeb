@@ -1,0 +1,42 @@
+<project name="SpringWeb and Hibernate tools integration" default="gen-pojo" basedir=".">
+
+	<property name="src.root" value="src/main/java" />
+	<property name="class.root" value="ant-build/classes" />
+	<property name="lib.dir" value="D:/User Profile/S00103/.m2" />
+	<property name="data.dir" value="ant-build/data" />
+	<property name="out.dir" value="ant-build/out" />
+
+	<path id="project.class.path">
+		<pathelement location="${class.root}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="gen-schema" description="Generate DB schema from the O/R mapping files">
+		<taskdef name="schemaexport" 
+				classname="net.sf.hibernate.tool.hbm2ddl.SchemaExportTask" 
+				classpathref="project.class.path">
+		</taskdef>
+		<schemaexport properties="${src.root}/hibernate.properties"
+					  quiet="no" text="no" drop="no" delimiter=";" >
+			<fileset dir="${class.root}">
+				<include name="**/*.hbm.xml" />
+			</fileset>
+		</schemaexport>
+	</target>
+
+	<taskdef name="hbm2java" 
+		classname="net.sf.hibernate.tool.hbm2java.Hbm2JavaTask" 
+		classpathref="project.class.path">
+	</taskdef>
+
+	<target name="gen-pojo" description="Generate Java source O/R mapping files">
+		<hbm2java output="${out.dir}">
+			<fileset dir="${src.root}">
+				<include name="**/*.hbm.xml" />
+			</fileset>
+		</hbm2java>
+	</target>
+
+</project>
