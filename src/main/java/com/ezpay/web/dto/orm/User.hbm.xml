@@ -6,8 +6,8 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforg
 		<id name="id" column="id">
 			<generator class="native" />
 		</id>
-		<property name="username" column="username" />
-		<property name="passwd" column="passwd" />
-		<property name="email" column="email" />
+		<property name="username" column="username" length="16" not-null="true"/>
+		<property name="passwd" column="passwd" length="16"/>
+		<property name="email" column="email" length="100"/>
 	</class>	
 </hibernate-mapping>
